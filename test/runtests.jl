@@ -86,6 +86,11 @@ using Test
     @test [x for x in CL] == collect(1:10)
     @test sum(x for x in CL) == 55
 
+    # test findfirst
+    cl = circularlist(6:10)
+    n = findfirst(==(9), cl)
+    @test n.data == 9
+
     # test head/tail
     @test head(CL).data == 1
     @test tail(CL).data == 10

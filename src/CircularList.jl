@@ -1,6 +1,6 @@
 module CircularList
 
-import Base: insert!, delete!, length, size, eltype, iterate, show
+import Base: insert!, delete!, length, size, eltype, iterate, findfirst, show
 
 export circularlist, length, size, current, previous, next,
     insert!, delete!, shift!, move!, forward!, backward!, jump!,
@@ -166,6 +166,15 @@ eltype(CL::List) = typeof(CL.current.data)
 
 "Return the size of the list."
 size(CL::List) = (CL.length, )
+
+"Find the first node in the list with the given value"
+function findfirst(predicate::Function, CL::List)
+    n = CL.current
+    for _ in 1:CL.length
+        predicate(n.data) && return n
+        n = n.next
+    end
+end
 
 "Show list."
 function show(io::IO, CL::List{T}) where T
